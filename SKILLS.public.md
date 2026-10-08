@@ -20,6 +20,9 @@
 | `domain-modeling` | 직접 설치 (`npx skills`) | 자동 | 용어 정리, `CONTEXT.md`·ADR 작성. 저장소에 파일을 만듦 |
 | `writing-for-agents` | 직접 설치 (`npx skills`) | 자동 | skill·`CLAUDE.md` 작성 가이드 |
 | `handoff` | 직접 설치 (`npx skills`) | 수동 (`/handoff`) | 대화를 다음 에이전트용 인수인계 문서로 요약 |
+| `codex-review` | 직접 작성 | 자동 ("codex 리뷰", "세컨드 오피니언", "devil's advocate") | Codex CLI를 읽기 전용으로 돌려 코드·설계에 대한 외부 세컨드 오피니언을 받고, 지적 사항을 직접 검증 |
+
+직접 작성한 skill(`codex-review`, `hail-mary-rocky`, `hwp`)의 원본은 이 저장소 [`skills/`](skills/)에 있음. 외부 저장소에서 설치한 skill은 재배포하지 않고 출처만 기록.
 
 `~/.claude/skills/` 안의 `synced/`는 `SKILL.md`가 없는 동기화용 폴더라 skill로 세지 않음.
 
@@ -31,7 +34,7 @@
 |---|---|---|---|---|
 | `superpowers` | `superpowers-dev` (github `obra/superpowers`) | 활성 | brainstorming, writing-plans, executing-plans, test-driven-development, systematic-debugging, verification-before-completion, requesting-code-review, receiving-code-review, subagent-driven-development, dispatching-parallel-agents, using-git-worktrees, finishing-a-development-branch, writing-skills, diagnosing-superpowers, using-superpowers | 세션 시작 시 자동 로드되는 프로세스 skill 모음 |
 | `playwright` | `claude-plugins-official` | 활성 | (skill 없음) | 브라우저 자동화 MCP 도구만 제공 |
-| `superpowers` | `claude-plugins-official` | 비활성 | (위와 동일, 구버전) | `superpowers-dev` 쪽으로 대체됨 |
+| `superpowers` | `claude-plugins-official` | 비활성 | (위와 동일) | `superpowers-dev` 쪽으로 대체됨. 버전은 동일하게 6.4.1로 갱신됨 |
 | `frontend-design` | `claude-plugins-official` | 비활성 | frontend-design | |
 | `mcp-server-dev` | `claude-plugins-official` | 비활성 | build-mcp-app, build-mcp-server, build-mcpb | |
 
