@@ -5,6 +5,18 @@
 - **수요 없음**: 지금 쓸 일이 없음. 재검토 조건이 생기면 다시 본다.
 - **보류**: 쓸모는 있으나 비용·위험·성숙도 때문에 미룸.
 
+## 2026-10-19
+
+[mattpocock/skills](https://github.com/mattpocock/skills) v1.3.1 (`49dd158`) 재검토. 설치·갱신분은 SKILLS.claude.md §1.1.
+
+| skill | 결정 | 이유 | 재검토 조건 |
+|---|---|---|---|
+| `tdd`, `diagnosing-bugs` | 설치 안 함, 규칙만 반영 | superpowers `test-driven-development`·`systematic-debugging`과 trigger 겹침. 차별점(seam 합의, 독립 기대값, red feedback loop 우선)만 `~/.claude/CLAUDE.md`에 2줄 | superpowers 제거 시 |
+| `code-review`, `to-spec`, `to-tickets`, `implement(-spec)`, `wayfinder`, `triage` | 수요 없음 | superpowers 워크플로·`codex-review`와 겹치거나 issue tracker 연동 전제 | 팀 단위 issue 기반 작업 시작 시 |
+| `setup-matt-pocock-skills`, `ask-matt`, `research`, `teach` | 수요 없음 | 저자 전용 설정·메타 skill이거나 내장 기능과 겹침 | — |
+| `migrate-to-shoehorn`, `scaffold-exercises`, `in-progress/*` | 수요 없음 | 저자 개인 프로젝트용 또는 미완성 | 안정 버전 출시 시 (`in-progress`) |
+| `wizard`, `git-guardrails-claude-code`, `retro`, `to-questionnaire` | 보류 | 쓸모 있으나 이번 범위 밖 | 필요 생길 때 개별 검토 |
+
 ## 2026-10-08
 
 | 저장소 | 결정 | 이유 | 재검토 조건 |
