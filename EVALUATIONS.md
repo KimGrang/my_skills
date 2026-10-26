@@ -5,6 +5,29 @@
 - **수요 없음**: 지금 쓸 일이 없음. 재검토 조건이 생기면 다시 본다.
 - **보류**: 쓸모는 있으나 비용·위험·성숙도 때문에 미룸.
 
+## 2026-10-26
+
+| 저장소 | 결정 | 이유 | 재검토 조건 |
+|---|---|---|---|
+| [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | 보류 (조건부 도입) | SEO 감사 plugin(MIT, skill 26개·agent 19개·`/seo`). Python 3.11–3.14 필요, `/seo setup`이 별도 Python 환경과 headless Chromium 설치. 기본 기능은 API key 불필요(Google 연동은 선택). 감사 대상 페이지 내용이 Claude로 전송되고 Wikipedia·Reddit·Common Crawl·Moz·Bing 등 공개 출처 조회. `hooks.json`의 PostToolUse(`Edit\|Write`, 30초) 훅이 켜져 있으면 모든 프로젝트의 모든 편집 뒤 `validate-schema.py` 실행. skill·agent 설명이 매 세션 context에 실려 CLAUDE.md skill 라우팅과 충돌 가능. 수동 `install.ps1`은 `~\.claude\skills`·`agents`에 묻지 않고 덮어쓰고, 오류 일부 무시, 체크섬 없이 `runtime.py` 실행(git 태그 v2.5.0만 고정) — 비추천 | 운영 중인 웹사이트 SEO 작업 계획이 생길 때. `/plugin marketplace add AgriciDaniel/claude-seo` → `/plugin install claude-seo@agricidaniel-claude-seo`를 해당 웹 프로젝트(예: dodaccare_web)의 project/local 범위로만, user 전역 금지. 설치 전 `scripts/runtime.py`·`requirements.txt` 검토(pip/uv 대상, Chromium 출처). 제거는 `/plugin uninstall`, `/seo setup`이 만든 Python 환경·Chromium은 따로 삭제 |
+
+## 2026-10-21
+
+외부 "GitHub 인기 저장소 Top 10" 목록 검토. README·GitHub API 메타데이터 기준, 설치·실행은 안 함.
+
+| 저장소 | 결정 | 이유 | 재검토 조건 |
+|---|---|---|---|
+| [cloudflare/security-audit-skill](https://github.com/cloudflare/security-audit-skill) | 보류 (1순위 후보) | 6단계 다중 agent 보안 감사 skill(MIT, `npx skills add`). 내장 `security-review`(diff 단위)와 달리 저장소 전체 대상이고 발견마다 독립 verifier가 반증 시도. 대상 코드 실행엔 네트워크 차단 OS sandbox 필요, 없으면 `needs_validation`에 머묾. subagent 다수라 실행당 토큰 큼 | 공개 배포할 서비스·라이브러리 감사가 필요할 때. 기본 출력 경로 `~/security-audit-skill/<repo>/` 확인 |
+| [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) | 보류 | "최소 코드" 상시 프롬프트 plugin(MIT). hook·band(UI)·`~/.config/ponytail/` 세션 기록 포함. 매 답변 끝 "생략·미확인 항목" 형식이 Rocky 말투와 겹치고, `/ponytail-review`·`-audit`이 내장 `code-review`와 겹침. 벤치마크는 저자 자체 측정 | 에이전트가 과잉 구현하는 문제가 실제로 보일 때. 한 프로젝트에서 `/ponytail band off`로 시험 |
+| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | 보류 | 코드베이스 → knowledge graph `/graphify` skill(Apache-2.0). 코드는 tree-sitter AST로 로컬 처리, 문서·PDF semantic pass만 모델 호출. README에 Cloud 유료 유도 많음. 작은 저장소엔 `code-explorer`로 충분 | 처음 보는 대형 코드베이스·monorepo 분석 때 `graphify install --project`로 그 저장소에만 |
+| [headroomlabs-ai/headroom](https://github.com/headroomlabs-ai/headroom) | 보류 | tool 출력·로그 압축 proxy/MCP(Apache-2.0). `headroom wrap claude`가 모든 API 트래픽을 로컬 proxy로 돌리고 Serena MCP를 `~/.claude.json`에 등록. telemetry beacon 기본 ON. 코딩 agent 절감 주장 ~20% | 토큰 비용이 실제 병목이 될 때. `HEADROOM_TELEMETRY=off`, `--code-memory none`으로 한 프로젝트 측정 |
+| [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | 수요 없음 | multi-agent swarm harness. 전체 설치(`npx ruflo init`)는 agent 98개·MCP 도구 314개·hook·daemon·`CLAUDE.md` 생성으로 context hygiene 원칙과 정면 충돌. mods는 sandbox 없이 실행 | 다중 agent 상시 운영 수요 (openrig와 함께 비교) |
+| [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) | 수요 없음 | persona subagent 대량 라이브러리(MIT). 일괄 설치 시 agent 목록이 커져 매 세션 context를 차지하고, 개발 작업엔 superpowers·`code-explorer`로 충분 | 특정 역할 agent가 필요할 때 해당 `.md` 하나만 검토 후 복사 |
+| [stablyai/orca](https://github.com/stablyai/orca) | 수요 없음 | 여러 coding agent를 worktree별로 병렬 실행하는 데스크톱 앱(MIT). 1인 순차 작업 위주, `using-git-worktrees`로 충분 | 같은 작업을 여러 agent에 동시에 돌려 비교할 일이 잦아질 때 |
+| [anomalyco/opencode](https://github.com/anomalyco/opencode) | 수요 없음 | 오픈소스 coding agent(Claude Code 대체재). skill·plugin이 아님 | 다른 모델 공급자를 주력으로 쓸 때 |
+| [Comfy-Org/ComfyUI](https://github.com/Comfy-Org/ComfyUI) | 수요 없음 | diffusion 이미지 생성 노드 GUI(GPL-3.0). agent 도구 아님, 로컬 GPU 필요 | 이미지 생성 작업이 생길 때 |
+| [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search) | 수요 없음 | Claude Code 기반 구직 framework(MIT). fork해서 쓰는 저장소, LaTeX·bun 필요. fork는 공개라 개인정보 주의(README 경고) | 구직 시작 시. fork 대신 clone 후 private 저장소로 |
+
 ## 2026-10-19
 
 [mattpocock/skills](https://github.com/mattpocock/skills) v1.3.1 (`49dd158`) 재검토. 설치·갱신분은 SKILLS.claude.md §1.1.
