@@ -5,6 +5,19 @@
 - **수요 없음**: 지금 쓸 일이 없음. 재검토 조건이 생기면 다시 본다.
 - **보류**: 쓸모는 있으나 비용·위험·성숙도 때문에 미룸.
 
+## 2026-10-27
+
+README·GitHub API 메타데이터 기준, 설치·실행은 안 함.
+
+| 저장소 | 결정 | 이유 | 재검토 조건 |
+|---|---|---|---|
+| [trailhq/Trail-Code](https://github.com/trailhq/Trail-Code) | 보류 | tree-sitter 코드 graph("graft map") + 대화에서 뽑은 learning을 `.trail/`에 커밋해 공유(MIT, npm, 2026-07 생성). `trail init`이 user 전역 `~/.claude/settings.json`에 hook 5종(SessionStart·UserPromptSubmit·PreToolUse·PostToolUse·Stop)과 statusline, `~/.claude/helpers/`에 shim을 씀 — 모든 프로젝트 매 prompt에 context 주입. init 때 Claude Code transcript를 Sonnet으로 읽고(내 사용량 차감) `gh` 로그인 시 최근 PR 50개 리뷰도 읽음. telemetry 기본 ON. 벤치마크(비용 −32%, SWE-bench 33/50 vs 27/50)는 저자 자체 측정. graphify·codebase-memory-mcp와 기능 겹침 | 대형 코드베이스에서 탐색 비용이 실제 병목일 때. 그 저장소에서만 `DO_NOT_TRACK=1`로 시험, 전역 hook은 `trail uninstall --dry-run`류로 쓰는 파일 먼저 확인. 제거 `trail uninstall -y` |
+| [DeusData/codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp) | 보류 (코드 graph 1순위 후보) | 단일 C 바이너리 코드 knowledge graph MCP(MIT, tool 17개, grammar 162개, 로컬 embedding). telemetry 없음, release마다 SHA-256 `checksums.txt`. 단 권장 설치가 `curl \| bash`이고, 기본 `install`이 감지한 모든 agent에 설정·skill·profile·hook을 씀. 계정당 공유 daemon 상시 기동, `auto_watch` 기본 true로 git 프로젝트 자동 재색인. CBM Lens는 v0.0.1 beta. 작은 저장소엔 `code-explorer`로 충분 | 처음 보는 대형 코드베이스 분석 때. release 바이너리 수동 다운로드 → checksum 확인 → `--skip-config`로 바이너리만 설치 → 해당 프로젝트 `.mcp.json`에만 등록. 제거 `codebase-memory-mcp uninstall --dry-run` 후 `-y` |
+| [calesthio/OpenMontage](https://github.com/calesthio/OpenMontage) | 수요 없음 | agent 주도 영상 제작 저장소(AGPL-3.0, pipeline 12개, skill·지식 파일 700+). skill/plugin이 아니라 clone 후 그 안에서 agent를 돌리는 독립 프로젝트라 전역 오염은 없음. Python·Node·FFmpeg 필요, 고품질은 fal·Kling·ElevenLabs 등 유료 key(영상당 ~$1–3). hyperframes와 같은 범주 | 영상 제작이 필요해질 때 (hyperframes와 비교) |
+| [msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents) | 수요 없음 (유지) | 2026-10-21 검토 이후 변경은 agent 추가(Electrical Engineer)뿐. 판단 그대로 | 2026-10-21 항목과 같음 |
+
+`trail-code`는 `trailhq/Trail-Code`로 보고 검토했다.
+
 ## 2026-10-26
 
 | 저장소 | 결정 | 이유 | 재검토 조건 |
