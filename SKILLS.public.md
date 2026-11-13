@@ -20,12 +20,18 @@
 | `domain-modeling` | 직접 설치 (`npx skills`) | 자동 | 용어 정리, `CONTEXT.md`·ADR 작성. 저장소에 파일을 만듦 |
 | `writing-for-agents` | 직접 설치 (`npx skills`) | 자동 | skill·`CLAUDE.md` 작성 가이드 |
 | `handoff` | 직접 설치 (`npx skills`) | 수동 (`/handoff`) | 대화를 다음 에이전트용 인수인계 문서로 요약 |
+| `codebase-design` | 직접 설치 (`npx skills`) | 자동 | deep module 설계 어휘 (interface·seam) |
+| `improve-codebase-architecture` | 직접 설치 (`npx skills`) | 수동 | 코드베이스에서 deepening 후보 찾기 |
+| `grill-with-docs` | 직접 설치 (`npx skills`) | 수동 | 캐묻기 + 용어집·ADR 기록 |
+| `pr` | 직접 설치 (`npx skills`) | 자동 | PR 본문 작성 |
+| `prototype` | 직접 설치 (`npx skills`) | 자동 | 설계 질문에 답할 일회용 prototype |
+| `wait-what` | 직접 설치 (`npx skills`) | 수동 | 직전 설명 되짚기 (수동이라 `eli5`와 trigger 안 겹침) |
 
 직접 작성한 skill(`hail-mary-rocky`, `hwp`)의 원본은 이 저장소 [`skills/`](skills/)에 있음. 외부 저장소에서 설치한 skill은 재배포하지 않고 출처만 기록.
 
 `~/.claude/skills/` 안의 `synced/`는 `SKILL.md`가 없는 동기화용 폴더라 skill로 세지 않음.
 
-`grill-me`는 `grilling`이 없으면 동작하지 않으므로 함께 설치해야 함. 같은 저장소의 `wait-what`(직전 답변을 쉬운 영어로 재설명)은 `eli5`로 대체 가능하다고 판단해 설치하지 않음.
+`grill-me`는 `grilling`이 없으면 동작하지 않으므로 함께 설치해야 함. `wait-what`은 처음엔 `eli5`와 겹친다고 보고 제외했으나, 수동 호출이라 trigger가 겹치지 않아 이후 설치함.
 
 ### Plugin
 
@@ -33,7 +39,7 @@
 |---|---|---|---|---|
 | `superpowers` | `superpowers-dev` (github `obra/superpowers`) | 활성 | brainstorming, writing-plans, executing-plans, test-driven-development, systematic-debugging, verification-before-completion, requesting-code-review, receiving-code-review, subagent-driven-development, dispatching-parallel-agents, using-git-worktrees, finishing-a-development-branch, writing-skills, diagnosing-superpowers, using-superpowers | 세션 시작 시 자동 로드되는 프로세스 skill 모음 |
 | `playwright` | `claude-plugins-official` | 활성 | (skill 없음) | 브라우저 자동화 MCP 도구만 제공 |
-| `superpowers` | `claude-plugins-official` | 비활성 | (위와 동일) | `superpowers-dev` 쪽으로 대체됨. 버전은 동일하게 6.4.1로 갱신됨 |
+| `superpowers` | `claude-plugins-official` | 비활성 | (위와 동일) | `superpowers-dev` 쪽으로 대체됨. 단 비활성 쪽이 7.0.0으로 활성 dev(6.4.1)보다 높음 |
 | `frontend-design` | `claude-plugins-official` | 비활성 | frontend-design | |
 | `mcp-server-dev` | `claude-plugins-official` | 비활성 | build-mcp-app, build-mcp-server, build-mcpb | |
 
