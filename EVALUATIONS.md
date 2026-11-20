@@ -5,6 +5,22 @@
 - **수요 없음**: 지금 쓸 일이 없음. 재검토 조건이 생기면 다시 본다.
 - **보류**: 쓸모는 있으나 비용·위험·성숙도 때문에 미룸.
 
+## 2026-11-20
+
+`modern-web-guidance-src` main(`949129f`) shallow clone + npm 메타데이터 기준 검토. 설치·실행은 안 함.
+
+| 저장소 | 결정 | 이유 | 재검토 조건 |
+|---|---|---|---|
+| [GoogleChrome/modern-web-guidance-src](https://github.com/GoogleChrome/modern-web-guidance-src) (배포본 [GoogleChrome/modern-web-guidance](https://github.com/GoogleChrome/modern-web-guidance)) | 보류 (웹 작업 1순위 후보) | 최신 HTML·CSS·브라우저 API 지침을 agent에 넣는 skill + CLI(코드 Apache-2.0, guide CC-BY 4.0). Chrome·Edge·Firefox·MDN 팀 공동 관리, npm 1.0.0이 2026-11-10 정식 출시(현재 1.0.1). guide 252개(평균 ~7.5KB), 기능마다 Baseline 지원 정보·fallback 포함. 검색은 로컬 embedding+BM25라 API key 없음. hook 없음, plugin은 SKILL.md 1개(~205 token)만 상주. 자체 eval에서 Claude Code(opus-5-5) 통과율 57%→88%(+31pp) — 다만 Google이 만든 과제·grader 기준 자체 측정. `dodaccare_web`·`dodaccare_admin` 등 웹 프로젝트가 있어 수요 있음. 단점: (1) description이 "MANDATORY: Execute FIRST for all HTML/CSS and clientside JS tasks"라 웹 작업마다 자동 발동, 답변 끝에 `### Modern Web Guidance` 공개 섹션 강제. (2) 매 호출 `npx -y modern-web-guidance@latest` — 버전 고정 없이 최신 npm 패키지(16.7MB, 의존성 0, 관리자 Google 측 4명)를 실행. 1.0 전엔 하루 2 release. (3) telemetry 기본 켜짐: agent가 만든 검색어·guide ID·agent 이름·OS·버전을 별도 watchdog 프로세스가 Google Clearcut으로 전송(원문 prompt는 안 보냄). `DISABLE_TELEMETRY=1`로 끄며, 같은 변수로 Claude Code 자체 telemetry도 꺼짐. (4) `claude-plugins-official` marketplace 판은 v0.0.194에서 업데이트 중단 — `googlechrome` marketplace로 설치해야 함 | 웹 프론트엔드 작업을 다시 할 때. 먼저 설치 없이 `DISABLE_TELEMETRY=1 npx modern-web-guidance@latest search "<질문>"` → `retrieve <id>`로 품질 확인. 쓸 만하면 `/plugin marketplace add GoogleChrome/modern-web-guidance` → `/plugin install modern-web-guidance@googlechrome`, 웹 프로젝트에서만 enable. `DISABLE_TELEMETRY=1`은 `~/.claude/settings.json` `env`에 넣고, permission은 `npx -y modern-web-guidance@latest *`만 허용(`npx *` 금지). Origin Trial·volatile 기능은 기본 차단 유지(`.mwgrc` 안 만듦) |
+
+## 2026-11-19
+
+v4.3.2 (`a854f3b`) shallow clone 후 README·SECURITY.md·SKILL.md·setup-wizard 기준 검토, 설치·실행은 안 함.
+
+| 저장소 | 결정 | 이유 | 재검토 조건 |
+|---|---|---|---|
+| [mvanhorn/last30days-skill](https://github.com/mvanhorn/last30days-skill) | 보류 (트렌드 조사 1순위 후보) | 최근 30일 Reddit·X·YouTube·HN·Polymarket·GitHub·웹을 모아 engagement 기준으로 랭킹·요약하는 `/last30days` skill(MIT, ★~70k, 2026-01 생성). hook 없음, telemetry 없음, Python 3.12+ stdlib만(현재 WSL 3.12.3·node 22 충족). Reddit·HN·Polymarket·GitHub는 key 없이 동작 — `deep-research`·WebSearch에 없는 커뮤니티 반응 신호가 차별점. 단점: (1) 일반 조사 1회에 SKILL.md+runtime+research-runbook+synthesis 필독 ≈143KB(~35k token)로 context 큼. (2) first-run setup이 `npx -y @mvanhorn/printing-press-library`(저자 소유 외부 npm)로 CLI 4종을 `~/.local/bin`에 설치하고, 동의 시 브라우저 x.com cookie를 매 run 읽음(WSL은 Windows Firefox fallback). X는 비공식 client(bird)라 계정 제재 위험, Reddit 로그인 세션 옵션은 setup 문서도 약관 위반 가능 명시. (3) jobs lane은 기본값으로 robots.txt 무시(`LAST30DAYS_JOBS_RESPECT_ROBOTS=1`로 끔). (4) Gemini·OpenAI·xAI·OpenRouter key가 어느 config 층에든 있으면 수집물을 그 provider로 보내 rerank. (5) 매 run `~/Documents/Last30Days`·`~/.config/last30days/`·`~/.local/share/last30days/`에 저장, purge 명령 없음. (6) 하루 3 release 수준 변경 빈도 + marketplace 자동 업데이트라 instruction이 수시로 바뀜 | 제품·기술 트렌드나 "사람들이 X를 어떻게 보나" 조사가 반복될 때. `/plugin marketplace add mvanhorn/last30days-skill` → `/plugin install last30days` 후 marketplace 자동 업데이트 끔. 첫 run에서 "Skip for now" 선택(cookie·CLI 설치 없음, Reddit·HN·Polymarket·GitHub·웹만), 필요 시 `.env`에 `LAST30DAYS_JOBS_RESPECT_ROBOTS=1`, 저장 원치 않으면 `LAST30DAYS_MEMORY_DIR=`(빈 값). 실행 전 `scripts/last30days.py --preflight`로 읽기·쓰기 계획 확인. 제거는 `/plugin uninstall` + 위 3개 디렉터리 수동 삭제 |
+
 ## 2026-10-27
 
 README·GitHub API 메타데이터 기준, 설치·실행은 안 함.
